@@ -50,3 +50,20 @@
     }
   }
 }
+
+.actions {
+  margin-top: 12px;
+  margin-bottom: 12px;
+
+  button {
+    border: 1px solid var(--color-border);
+    background: var(--color-surface);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+
+    &:hover {
+      background: var(--color-bg);
+    }
+  }
+}

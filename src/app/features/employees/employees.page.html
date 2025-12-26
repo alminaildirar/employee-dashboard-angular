@@ -1,11 +1,15 @@
 <h1>Employees</h1>
 
-@if (isLoading()) {
+@if (store.isLoading()) {
 <p>Loading...</p>
-} @else if (error()) {
-<p class="error">{{ error() }}</p>
-<button type="button" (click)="load()">Retry</button>
+} @else if (store.error()) {
+<p class="error">{{ store.error() }}</p>
+<button type="button" (click)="store.refresh()">Retry</button>
 } @else {
+<div class="actions">
+  <button type="button" (click)="store.refresh()">Refresh</button>
+</div>
+
 <div class="table">
   <div class="row head">
     <div>Name</div>
@@ -14,7 +18,7 @@
     <div>Status</div>
   </div>
 
-  @for (e of employees(); track e.id) {
+  @for (e of store.employees(); track e.id) {
   <div class="row">
     <div>
       <a class="name" [routerLink]="['/employees', e.id]">{{ e.fullName }}</a>
