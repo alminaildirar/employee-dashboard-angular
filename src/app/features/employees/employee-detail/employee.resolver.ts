@@ -1,9 +1,9 @@
-import { inject } from '@angular/core';
 import { ResolveFn } from '@angular/router';
-import { Employee, EmployeesApi } from '../../../core/services/employees.api';
+import { of } from 'rxjs';
+import { Employee, EMPLOYEES } from '../../../core/mock/employees.mock';
 
-export const employeeResolver: ResolveFn<Employee> = (route) => {
-  const api = inject(EmployeesApi);
+export const employeeResolver: ResolveFn<Employee | null> = (route) => {
   const id = route.paramMap.get('id')!;
-  return api.getById(id);
+  const emp = EMPLOYEES.find((e) => e.id === id) ?? null;
+  return of(emp);
 };

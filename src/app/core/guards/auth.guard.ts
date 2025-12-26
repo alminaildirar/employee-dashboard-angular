@@ -1,8 +1,8 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Router } from '@angular/router';
+import { CanActivateChildFn, CanActivateFn, Router } from '@angular/router';
 import { AuthStore } from '../services/auth.store';
 
-export const authGuard: CanMatchFn = () => {
+function checkAuth(): boolean {
   const auth = inject(AuthStore);
   const router = inject(Router);
 
@@ -10,4 +10,8 @@ export const authGuard: CanMatchFn = () => {
 
   router.navigate(['/login']);
   return false;
-};
+}
+
+// Private sayfalar için
+export const authCanActivate: CanActivateFn = () => checkAuth();
+export const authCanActivateChild: CanActivateChildFn = () => checkAuth();

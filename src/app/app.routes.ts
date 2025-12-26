@@ -1,22 +1,22 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
+
+import { authCanActivateChild } from './core/guards/auth.guard';
+import { employeeResolver } from './features/employees/employee-detail/employee.resolver';
 import { ShellComponent } from './shared/ui/shell/sheel.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
 
-  // Public route
   {
     path: 'login',
     loadComponent: () =>
       import('./features/login/login.page').then((m) => m.LoginPage),
   },
 
-  // Private routes (Shell altında)
   {
     path: '',
     component: ShellComponent,
-    canMatch: [authGuard],
+    canActivateChild: [authCanActivateChild],
     children: [
       {
         path: 'dashboard',
@@ -38,6 +38,9 @@ export const routes: Routes = [
           import(
             './features/employees/employee-detail/employee-detail.page'
           ).then((m) => m.EmployeeDetailPage),
+        resolve: {
+          employee: employeeResolver,
+        },
       },
       {
         path: 'settings',

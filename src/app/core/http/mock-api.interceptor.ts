@@ -1,54 +1,31 @@
 import { HttpInterceptorFn, HttpResponse } from '@angular/common/http';
 import { delay, of } from 'rxjs';
+import { EMPLOYEES } from '../mock/employees.mock';
 
-type EmployeeDto = {
-  id: string;
-  fullName: string;
-  email: string;
-  role: 'Engineer' | 'Manager' | 'HR';
-  status: 'ACTIVE' | 'INACTIVE';
-};
-
-const EMPLOYEES: EmployeeDto[] = [
-  {
-    id: 'e1',
-    fullName: 'Rachel Green',
-    email: 'rachel@demo.dev',
-    role: 'Engineer',
-    status: 'ACTIVE',
-  },
-  {
-    id: 'e2',
-    fullName: 'Chandler Bing',
-    email: 'chandler@demo.dev',
-    role: 'Manager',
-    status: 'ACTIVE',
-  },
-  {
-    id: 'e3',
-    fullName: 'Joey Tribbiani',
-    email: 'joey@demo.dev',
-    role: 'HR',
-    status: 'INACTIVE',
-  },
-];
+function getPath(url: string): string {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    try {
+      return new URL(url).pathname;
+    } catch {
+      return url;
+    }
+  }
+  return url;
+}
 
 export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
-  if (!req.url.startsWith('/api/')) return next(req);
+  const path = getPath(req.url);
 
-  // GET /api/employees
-  if (req.method === 'GET' && req.url === '/api/employees') {
-    return of(
-      new HttpResponse({
-        status: 200,
-        body: EMPLOYEES,
-      })
-    ).pipe(delay(350));
+  if (!path.startsWith('/api/')) return next(req);
+
+  if (req.method === 'GET' && path === '/api/employees') {
+    return of(new HttpResponse({ status: 200, body: EMPLOYEES })).pipe(
+      delay(250)
+    );
   }
 
-  // GET /api/employees/:id
-  if (req.method === 'GET' && req.url.startsWith('/api/employees/')) {
-    const id = req.url.split('/').pop()!;
+  if (req.method === 'GET' && path.startsWith('/api/employees/')) {
+    const id = path.split('/').pop()!;
     const emp = EMPLOYEES.find((e) => e.id === id);
 
     return of(
@@ -56,7 +33,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
         status: emp ? 200 : 404,
         body: emp ?? { message: 'Not Found' },
       })
-    ).pipe(delay(250));
+    ).pipe(delay(200));
   }
 
   return next(req);

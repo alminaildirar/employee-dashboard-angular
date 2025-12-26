@@ -2,11 +2,7 @@
 
 <h1>Employee Detail</h1>
 
-@if (isLoading()) {
-<p>Loading...</p>
-} @else if (error()) {
-<p class="error">{{ error() }}</p>
-} @else if (employee(); as e) {
+@if (employee(); as e) {
 <div class="card">
   <div class="row">
     <div class="label">Name</div>
@@ -32,4 +28,6 @@
     </div>
   </div>
 </div>
+} @else {
+<p class="error">Employee not found (resolver returned null).</p>
 }
