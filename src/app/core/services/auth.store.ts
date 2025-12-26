@@ -31,7 +31,6 @@ export class AuthStore {
   readonly isLoggedIn = computed(() => !!this._user());
 
   constructor() {
-    // Browser’da kullanıcıyı storage’a senkronla
     effect(() => {
       const u = this._user();
       if (!isBrowser()) return;
