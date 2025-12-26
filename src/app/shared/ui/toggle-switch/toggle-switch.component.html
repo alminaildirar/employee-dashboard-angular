@@ -1,0 +1,13 @@
+<button
+  type="button"
+  class="toggle"
+  [class.on]="value"
+  [disabled]="disabled"
+  (click)="toggle()"
+>
+  <span class="dot"></span>
+</button>
+
+@if (label()) {
+<span class="label">{{ label() }}</span>
+}
