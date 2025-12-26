@@ -38,12 +38,6 @@ export const routes: Routes = [
           import(
             './features/employees/employee-detail/employee-detail.page'
           ).then((m) => m.EmployeeDetailPage),
-        resolve: {
-          employee: () =>
-            import(
-              './features/employees/employee-detail/employee.resolver'
-            ).then((m) => m.employeeResolver),
-        },
       },
       {
         path: 'settings',

@@ -1,8 +1,10 @@
 import { Component, inject, signal } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { Employee, EmployeesApi } from '../../core/services/employees.api';
 
 @Component({
   standalone: true,
+  imports: [RouterLink],
   templateUrl: './employees.page.html',
   styleUrl: './employees.page.scss',
 })

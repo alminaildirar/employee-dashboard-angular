@@ -16,7 +16,9 @@
 
   @for (e of employees(); track e.id) {
   <div class="row">
-    <div>{{ e.fullName }}</div>
+    <div>
+      <a class="name" [routerLink]="['/employees', e.id]">{{ e.fullName }}</a>
+    </div>
     <div class="muted">{{ e.email }}</div>
     <div>{{ e.role }}</div>
     <div>

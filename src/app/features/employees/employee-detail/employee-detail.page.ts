@@ -1,6 +1,8 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { Employee } from '../../../core/services/employees.api';
+import { catchError, map, of, switchMap, tap } from 'rxjs';
+import { Employee, EmployeesApi } from '../../../core/services/employees.api';
 
 @Component({
   standalone: true,
@@ -10,8 +12,29 @@ import { Employee } from '../../../core/services/employees.api';
 })
 export class EmployeeDetailPage {
   private readonly route = inject(ActivatedRoute);
+  private readonly api = inject(EmployeesApi);
 
-  readonly employee = computed(
-    () => this.route.snapshot.data['employee'] as Employee
+  readonly isLoading = signal(true);
+  readonly error = signal('');
+
+  readonly employee = toSignal<Employee | null>(
+    this.route.paramMap.pipe(
+      map((p) => p.get('id')!),
+      tap(() => {
+        this.isLoading.set(true);
+        this.error.set('');
+      }),
+      switchMap((id) =>
+        this.api.getById(id).pipe(
+          map((emp) => emp ?? null),
+          catchError(() => {
+            this.error.set('Employee not found.');
+            return of(null);
+          })
+        )
+      ),
+      tap(() => this.isLoading.set(false))
+    ),
+    { initialValue: null }
   );
 }
