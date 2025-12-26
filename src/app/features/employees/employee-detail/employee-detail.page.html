@@ -1,0 +1,29 @@
+<a class="back" routerLink="/employees">← Back to Employees</a>
+
+<h1>Employee Detail</h1>
+
+<div class="card">
+  <div class="row">
+    <div class="label">Name</div>
+    <div class="value">{{ employee().fullName }}</div>
+  </div>
+
+  <div class="row">
+    <div class="label">Email</div>
+    <div class="value muted">{{ employee().email }}</div>
+  </div>
+
+  <div class="row">
+    <div class="label">Role</div>
+    <div class="value">{{ employee().role }}</div>
+  </div>
+
+  <div class="row">
+    <div class="label">Status</div>
+    <div class="value">
+      <span class="badge" [class.inactive]="employee().status === 'INACTIVE'">
+        {{ employee().status }}
+      </span>
+    </div>
+  </div>
+</div>
