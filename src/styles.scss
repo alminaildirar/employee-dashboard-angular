@@ -1,4 +1,3 @@
-/* You can add global styles to this file, and also import other style files */
 :root {
   --color-bg: #f7f8fa;
   --color-surface: #ffffff;
@@ -6,6 +5,15 @@
   --color-text: #111827;
   --color-muted: #6b7280;
   --color-primary: #2563eb;
+}
+
+:root[data-theme="dark"] {
+  --color-bg: #0b1220;
+  --color-surface: #0f172a;
+  --color-border: #22314d;
+  --color-text: #e5e7eb;
+  --color-muted: #9aa4b2;
+  --color-primary: #60a5fa;
 }
 
 body {
