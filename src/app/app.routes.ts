@@ -1,12 +1,22 @@
 import { Routes } from '@angular/router';
+import { authGuard } from './core/guards/auth.guard';
 import { ShellComponent } from './shared/ui/shell/sheel.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'dashboard' },
 
+  // Public route
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./features/login/login.page').then((m) => m.LoginPage),
+  },
+
+  // Private routes (Shell altında)
   {
     path: '',
     component: ShellComponent,
+    canMatch: [authGuard],
     children: [
       {
         path: 'dashboard',
@@ -30,12 +40,6 @@ export const routes: Routes = [
           ),
       },
     ],
-  },
-
-  {
-    path: 'login',
-    loadComponent: () =>
-      import('./features/login/login.page').then((m) => m.LoginPage),
   },
 
   { path: '**', redirectTo: 'dashboard' },

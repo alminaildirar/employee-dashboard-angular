@@ -34,3 +34,24 @@
 .content {
   padding: 16px;
 }
+
+.logout {
+  margin-left: auto;
+  padding: 6px 10px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.nav {
+  display: flex;
+  gap: 12px;
+}
+
+.logout,
+.login {
+  margin-left: auto;
+}
