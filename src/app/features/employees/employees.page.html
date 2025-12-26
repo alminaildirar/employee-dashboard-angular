@@ -1,0 +1,30 @@
+<h1>Employees</h1>
+
+@if (isLoading()) {
+<p>Loading...</p>
+} @else if (error()) {
+<p class="error">{{ error() }}</p>
+<button type="button" (click)="load()">Retry</button>
+} @else {
+<div class="table">
+  <div class="row head">
+    <div>Name</div>
+    <div>Email</div>
+    <div>Role</div>
+    <div>Status</div>
+  </div>
+
+  @for (e of employees(); track e.id) {
+  <div class="row">
+    <div>{{ e.fullName }}</div>
+    <div class="muted">{{ e.email }}</div>
+    <div>{{ e.role }}</div>
+    <div>
+      <span class="badge" [class.inactive]="e.status === 'INACTIVE'">
+        {{ e.status }}
+      </span>
+    </div>
+  </div>
+  }
+</div>
+}
