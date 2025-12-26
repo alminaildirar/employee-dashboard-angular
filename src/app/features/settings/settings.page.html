@@ -1,0 +1,54 @@
+<h1>Settings</h1>
+
+<form #f="ngForm" (ngSubmit)="onSubmit(f)" class="card">
+  <div class="row">
+    <div class="label">Theme</div>
+
+    <div class="segmented">
+      <button
+        type="button"
+        (click)="setTheme('light')"
+        [class.active]="model.theme === 'light'"
+      >
+        Light
+      </button>
+      <button
+        type="button"
+        (click)="setTheme('dark')"
+        [class.active]="model.theme === 'dark'"
+      >
+        Dark
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="label">Language</div>
+
+    <select
+      name="language"
+      [(ngModel)]="model.language"
+      (ngModelChange)="sync()"
+      required
+    >
+      <option value="tr">Türkçe</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+
+  <div class="row">
+    <div class="label">Compact mode</div>
+
+    <app-toggle-switch
+      name="compactMode"
+      [(ngModel)]="model.compactMode"
+      (ngModelChange)="sync()"
+      [label]="'Reduce spacing'"
+    />
+  </div>
+
+  <div class="actions">
+    <button type="submit" [disabled]="f.invalid">Save</button>
+    <span class="hint">Template-driven form + ngModel</span>
+  </div>
+</form>
