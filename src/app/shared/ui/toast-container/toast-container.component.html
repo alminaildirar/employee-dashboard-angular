@@ -1,0 +1,8 @@
+<div class="toasts">
+  @for (t of store.toasts(); track t.id) {
+  <div class="toast" [class]="t.type" (click)="dismiss(t.id)">
+    <div class="msg">{{ t.message }}</div>
+    <div class="hint">Click to dismiss</div>
+  </div>
+  }
+</div>
