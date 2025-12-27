@@ -36,5 +36,57 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     ).pipe(delay(200));
   }
 
+  // GET /api/employees/check-email?email=...
+  if (req.method === 'GET' && path === '/api/employees/check-email') {
+    const email = (req.params.get('email') ?? '').toLowerCase().trim();
+    const exists = EMPLOYEES.some((e) => e.email.toLowerCase() === email);
+
+    return of(
+      new HttpResponse({
+        status: 200,
+        body: { available: !exists },
+      })
+    ).pipe(delay(250));
+  }
+
+  // POST /api/employees
+  if (req.method === 'POST' && path === '/api/employees') {
+    const body = req.body as any;
+
+    const email = String(body?.email ?? '')
+      .toLowerCase()
+      .trim();
+    if (!email) {
+      return of(
+        new HttpResponse({
+          status: 400,
+          body: { message: 'Email is required' },
+        })
+      ).pipe(delay(200));
+    }
+
+    const exists = EMPLOYEES.some((e) => e.email.toLowerCase() === email);
+    if (exists) {
+      return of(
+        new HttpResponse({
+          status: 409,
+          body: { message: 'Email already exists' },
+        })
+      ).pipe(delay(200));
+    }
+
+    const newEmp = {
+      id: `e${EMPLOYEES.length + 1}`,
+      fullName: String(body?.fullName ?? '').trim(),
+      email,
+      role: body?.role ?? 'Engineer',
+      status: body?.status ?? 'ACTIVE',
+    };
+
+    EMPLOYEES.push(newEmp);
+
+    return of(new HttpResponse({ status: 201, body: newEmp })).pipe(delay(250));
+  }
+
   return next(req);
 };
