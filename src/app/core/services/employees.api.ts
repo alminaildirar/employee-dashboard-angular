@@ -9,6 +9,13 @@ export type Employee = {
   status: 'ACTIVE' | 'INACTIVE';
 };
 
+export type CreateEmployeeInput = {
+  fullName: string;
+  email: string;
+  role: Employee['role'];
+  status: Employee['status'];
+};
+
 @Injectable({ providedIn: 'root' })
 export class EmployeesApi {
   private readonly http = inject(HttpClient);
@@ -19,5 +26,15 @@ export class EmployeesApi {
 
   getById(id: string) {
     return this.http.get<Employee>(`/api/employees/${id}`);
+  }
+
+  create(input: CreateEmployeeInput) {
+    return this.http.post<Employee>('/api/employees', input);
+  }
+
+  checkEmailAvailable(email: string) {
+    return this.http.get<{ available: boolean }>('/api/employees/check-email', {
+      params: { email },
+    });
   }
 }
