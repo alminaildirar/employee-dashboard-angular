@@ -35,6 +35,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'employees/new',
+        loadComponent: () =>
+          import('./features/employees/create/employee-create.page').then(
+            (m) => m.EmployeeCreatePage
+          ),
+      },
+      {
         path: 'employees/:id',
         loadComponent: () =>
           import(
