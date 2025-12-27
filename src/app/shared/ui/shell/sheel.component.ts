@@ -6,6 +6,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { AuthStore } from '../../../core/services/auth.store';
+import { NotificationStore } from '../../../core/services/notification.store';
 
 @Component({
   selector: 'app-shell',
@@ -16,10 +17,12 @@ import { AuthStore } from '../../../core/services/auth.store';
 })
 export class ShellComponent {
   private readonly router = inject(Router);
+  private readonly toast = inject(NotificationStore);
   readonly auth = inject(AuthStore);
 
   async logout() {
     this.auth.logout();
+    this.toast.show('Çıkış yapıldı', 'success');
     await this.router.navigate(['/login']);
   }
 }
