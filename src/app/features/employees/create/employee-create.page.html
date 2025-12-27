@@ -1,0 +1,70 @@
+<a class="back" routerLink="/employees">← Back to Employees</a>
+<h1>Create Employee</h1>
+
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row">
+    <label>
+      Full name
+      <input
+        type="text"
+        formControlName="fullName"
+        placeholder="e.g. Ada Lovelace"
+      />
+    </label>
+
+    @if (form.controls.fullName.touched && form.controls.fullName.invalid) {
+    <p class="error">
+      @if (form.controls.fullName.errors?.['required']) { Full name is required.
+      } @else { Full name must be at least 3 characters. }
+    </p>
+    }
+  </div>
+
+  <div class="row">
+    <label>
+      Email
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="e.g. ada@demo.dev"
+      />
+    </label>
+
+    @if (emailCtrl.pending) {
+    <p class="hint">Checking email…</p>
+    } @if (emailCtrl.touched && emailCtrl.invalid) {
+    <p class="error">
+      @if (emailCtrl.errors?.['required']) { Email is required. } @else if
+      (emailCtrl.errors?.['email']) { Please enter a valid email. } @else if
+      (emailCtrl.errors?.['emailTaken']) { This email is already taken. }
+    </p>
+    }
+  </div>
+
+  <div class="row grid2">
+    <label>
+      Role
+      <select formControlName="role">
+        <option value="Engineer">Engineer</option>
+        <option value="Manager">Manager</option>
+        <option value="HR">HR</option>
+      </select>
+    </label>
+
+    <label>
+      Status
+      <select formControlName="status">
+        <option value="ACTIVE">ACTIVE</option>
+        <option value="INACTIVE">INACTIVE</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="actions">
+    <button type="submit" [disabled]="form.invalid || form.pending">
+      Create
+    </button>
+
+    <span class="hint">Reactive Forms (typed) + async validation</span>
+  </div>
+</form>
