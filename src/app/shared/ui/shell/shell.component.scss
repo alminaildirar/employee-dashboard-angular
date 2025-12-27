@@ -1,29 +1,42 @@
 .shell {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
+/* =========================
+   Topbar
+   ========================= */
 .topbar {
   display: flex;
   align-items: center;
-  gap: 24px;
-  padding: 12px 24px;
+  gap: var(--space-gap);
+  padding: 12px var(--space-page);
   background: var(--color-surface);
   border-bottom: 1px solid var(--color-border);
 }
 
+/* Brand / Logo */
 .brand {
   font-weight: 700;
   font-size: 16px;
+  letter-spacing: 0.2px;
 }
 
+/* =========================
+   Navigation
+   ========================= */
 .nav {
   display: flex;
-  gap: 16px;
+  gap: var(--space-gap);
 
   a {
     text-decoration: none;
-    color: var(--color-muted);
+    font-size: 14px;
     font-weight: 500;
+    color: var(--color-muted);
+    padding: 6px 4px;
+    border-radius: 6px;
 
     &.active {
       color: var(--color-primary);
@@ -31,25 +44,34 @@
 
     &:hover {
       color: var(--color-text);
+      background: var(--color-bg);
     }
   }
 }
 
+/* =========================
+   Auth actions
+   ========================= */
 .login,
 .logout {
   margin-left: auto;
   background: none;
   border: 1px solid var(--color-border);
   padding: 6px 12px;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 14px;
+  color: var(--color-text);
 
   &:hover {
     background: var(--color-bg);
   }
 }
 
+/* =========================
+   Main content
+   ========================= */
 .content {
-  padding: 24px;
+  flex: 1;
+  padding: var(--space-page);
 }

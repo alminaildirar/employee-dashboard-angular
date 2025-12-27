@@ -54,6 +54,12 @@ export class SettingsStore {
       if (!isBrowser()) return;
       document.documentElement.dataset['theme'] = theme;
     });
+
+    effect(() => {
+      const compact = this._settings().compactMode;
+      if (!isBrowser()) return;
+      document.documentElement.dataset['compact'] = compact ? 'true' : 'false';
+    });
   }
 
   patch(partial: Partial<Settings>) {

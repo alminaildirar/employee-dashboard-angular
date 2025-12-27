@@ -7,6 +7,21 @@
   --color-primary: #2563eb;
 }
 
+:root {
+  /* ...colors... */
+  --space-page: 24px;
+  --space-card: 16px;
+  --space-row: 12px;
+  --space-gap: 16px;
+}
+
+:root[data-compact="true"] {
+  --space-page: 16px;
+  --space-card: 12px;
+  --space-row: 8px;
+  --space-gap: 10px;
+}
+
 :root[data-theme="dark"] {
   --color-bg: #0b1220;
   --color-surface: #0f172a;

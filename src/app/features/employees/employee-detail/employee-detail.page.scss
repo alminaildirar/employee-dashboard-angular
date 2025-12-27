@@ -1,27 +1,37 @@
+/* =========================
+   Back link
+   ========================= */
 .back {
   display: inline-block;
   margin-bottom: 12px;
   text-decoration: none;
   color: var(--color-muted);
+  font-size: 14px;
 
   &:hover {
     color: var(--color-text);
   }
 }
 
+/* =========================
+     Card
+     ========================= */
 .card {
   margin-top: 12px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: 12px;
-  padding: 16px;
+  padding: var(--space-card);
   width: min(700px, 100%);
 }
 
+/* =========================
+     Rows
+     ========================= */
 .row {
   display: grid;
   grid-template-columns: 140px 1fr;
-  padding: 10px 0;
+  padding: var(--space-row) 0;
   border-top: 1px solid var(--color-border);
 
   &:first-child {
@@ -29,6 +39,9 @@
   }
 }
 
+/* =========================
+     Labels & values
+     ========================= */
 .label {
   color: var(--color-muted);
   font-size: 13px;
@@ -36,12 +49,16 @@
 
 .value {
   font-weight: 500;
+  font-size: 14px;
 }
 
 .muted {
   color: var(--color-muted);
 }
 
+/* =========================
+     Status badge
+     ========================= */
 .badge {
   display: inline-block;
   padding: 4px 10px;
@@ -52,4 +69,12 @@
   &.inactive {
     opacity: 0.6;
   }
+}
+
+/* =========================
+     Error
+     ========================= */
+.error {
+  color: #b00020;
+  margin-top: 12px;
 }
