@@ -6,10 +6,18 @@
 <p class="error">{{ store.error() }}</p>
 <button type="button" (click)="store.refresh()">Retry</button>
 } @else {
+<!-- =========================
+       Actions
+       ========================= -->
 <div class="actions">
+  <button type="button" routerLink="/employees/new">Add employee</button>
+
   <button type="button" (click)="store.refresh()">Refresh</button>
 </div>
 
+<!-- =========================
+       Table
+       ========================= -->
 <div class="table">
   <div class="row head">
     <div>Name</div>
@@ -21,10 +29,13 @@
   @for (e of store.employees(); track e.id) {
   <div class="row">
     <div>
-      <a class="name" [routerLink]="['/employees', e.id]">{{ e.fullName }}</a>
+      <a class="name" [routerLink]="['/employees', e.id]"> {{ e.fullName }} </a>
     </div>
+
     <div class="muted">{{ e.email }}</div>
+
     <div>{{ e.role }}</div>
+
     <div>
       <span class="badge" [class.inactive]="e.status === 'INACTIVE'">
         {{ e.status }}
