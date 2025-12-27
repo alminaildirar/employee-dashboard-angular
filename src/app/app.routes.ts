@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 
 import { authCanActivateChild } from './core/guards/auth.guard';
+import { guestGuard } from './core/guards/guest.guard';
 import { employeeResolver } from './features/employees/employee-detail/employee.resolver';
 import { ShellComponent } from './shared/ui/shell/sheel.component';
 
@@ -9,6 +10,7 @@ export const routes: Routes = [
 
   {
     path: 'login',
+    canMatch: [guestGuard],
     loadComponent: () =>
       import('./features/login/login.page').then((m) => m.LoginPage),
   },
