@@ -1,0 +1,66 @@
+<a class="back" [routerLink]="['/employees', employee()?.id]">← Back</a>
+<h1>Edit Employee</h1>
+
+@if (!employee()) {
+<p class="error">Employee not found.</p>
+} @else {
+<form class="card" [formGroup]="form" (ngSubmit)="submit()">
+  <div class="row">
+    <label>
+      Full name
+      <input type="text" formControlName="fullName" />
+    </label>
+
+    @if (form.controls.fullName.touched && form.controls.fullName.invalid) {
+    <p class="error">
+      @if (form.controls.fullName.errors?.['required']) { Full name is required.
+      } @else { Full name must be at least 3 characters. }
+    </p>
+    }
+  </div>
+
+  <div class="row">
+    <label>
+      Email
+      <input type="email" formControlName="email" />
+    </label>
+
+    @if (form.controls.email.pending) {
+    <p class="hint">Checking email…</p>
+    } @if (form.controls.email.touched && form.controls.email.invalid) {
+    <p class="error">
+      @if (form.controls.email.errors?.['required']) { Email is required. }
+      @else if (form.controls.email.errors?.['email']) { Please enter a valid
+      email. } @else if (form.controls.email.errors?.['emailTaken']) { This
+      email is already taken. }
+    </p>
+    }
+  </div>
+
+  <div class="row grid2">
+    <label>
+      Role
+      <select formControlName="role">
+        <option value="Engineer">Engineer</option>
+        <option value="Manager">Manager</option>
+        <option value="HR">HR</option>
+      </select>
+    </label>
+
+    <label>
+      Status
+      <select formControlName="status">
+        <option value="ACTIVE">ACTIVE</option>
+        <option value="INACTIVE">INACTIVE</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="actions">
+    <button type="submit" [disabled]="form.invalid || form.pending">
+      Save
+    </button>
+    <span class="hint">Edit form + resolver + dirty guard</span>
+  </div>
+</form>
+}
