@@ -16,14 +16,9 @@ function getPath(url: string): string {
 export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
   const path = getPath(req.url);
 
-  // Sadece /api/* isteklerini mock'la
   if (!path.startsWith('/api/')) return next(req);
 
-  /**
-   * ✅ 1) GET /api/employees/check-email?email=...
-   * IMPORTANT: Bu handler, /api/employees/:id handler'ından ÖNCE gelmeli.
-   * Yoksa "check-email" yanlışlıkla ":id" sanılabilir.
-   */
+  //GET /api/employees/check-email?email=...
   if (req.method === 'GET' && path === '/api/employees/check-email') {
     const url = new URL(req.urlWithParams, 'http://localhost');
     const email = (url.searchParams.get('email') ?? '').toLowerCase().trim();
@@ -38,9 +33,7 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     ).pipe(delay(250));
   }
 
-  /**
-   * ✅ 2) GET /api/employees
-   */
+  //GET /api/employees
   if (req.method === 'GET' && path === '/api/employees') {
     return of(
       new HttpResponse({
@@ -50,13 +43,10 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     ).pipe(delay(250));
   }
 
-  /**
-   * ✅ 3) GET /api/employees/:id
-   */
+  //GET /api/employees/:id
   if (req.method === 'GET' && path.startsWith('/api/employees/')) {
     const id = path.split('/').pop()!;
 
-    // ekstra güvenlik: check-email buraya düşmesin
     if (id === 'check-email') {
       return of(
         new HttpResponse({
@@ -76,9 +66,65 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     ).pipe(delay(250));
   }
 
-  /**
-   * ✅ 4) POST /api/employees
-   */
+  // PUT /api/employees/:id
+  if (req.method === 'PUT' && path.startsWith('/api/employees/')) {
+    const id = path.split('/').pop()!;
+    const body = req.body as any;
+
+    const idx = EMPLOYEES.findIndex((e) => e.id === id);
+    if (idx === -1) {
+      return of(
+        new HttpResponse({ status: 404, body: { message: 'Not Found' } })
+      ).pipe(delay(200));
+    }
+
+    const fullName = String(body?.fullName ?? '').trim();
+    const email = String(body?.email ?? '')
+      .toLowerCase()
+      .trim();
+    const role = (body?.role ?? EMPLOYEES[idx].role) as Employee['role'];
+    const status = (body?.status ??
+      EMPLOYEES[idx].status) as Employee['status'];
+
+    if (!fullName) {
+      return of(
+        new HttpResponse({
+          status: 400,
+          body: { message: 'Full name is required' },
+        })
+      ).pipe(delay(200));
+    }
+    if (!email) {
+      return of(
+        new HttpResponse({
+          status: 400,
+          body: { message: 'Email is required' },
+        })
+      ).pipe(delay(200));
+    }
+
+    // email değiştiyse uniqueness kontrolü
+    const emailTaken = EMPLOYEES.some(
+      (e) => e.id !== id && e.email.toLowerCase() === email
+    );
+    if (emailTaken) {
+      return of(
+        new HttpResponse({
+          status: 409,
+          body: { message: 'Email already exists' },
+        })
+      ).pipe(delay(200));
+    }
+
+    const updated = { ...EMPLOYEES[idx], fullName, email, role, status };
+    EMPLOYEES[idx] = updated;
+
+    return of(new HttpResponse({ status: 200, body: updated })).pipe(
+      delay(250)
+    );
+  }
+
+  //POST /api/employees
   if (req.method === 'POST' && path === '/api/employees') {
     const body = req.body as Partial<Employee>;
 
