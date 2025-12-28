@@ -16,6 +16,8 @@ export type CreateEmployeeInput = {
   status: Employee['status'];
 };
 
+export type UpdateEmployeeInput = CreateEmployeeInput;
+
 @Injectable({ providedIn: 'root' })
 export class EmployeesApi {
   private readonly http = inject(HttpClient);
@@ -30,6 +32,10 @@ export class EmployeesApi {
 
   create(input: CreateEmployeeInput) {
     return this.http.post<Employee>('/api/employees', input);
+  }
+
+  update(id: string, input: UpdateEmployeeInput) {
+    return this.http.put<Employee>(`/api/employees/${id}`, input);
   }
 
   checkEmailAvailable(email: string) {
