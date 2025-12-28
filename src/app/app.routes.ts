@@ -42,6 +42,22 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'employees/:id/edit',
+        loadComponent: () =>
+          import('./features/employees/edit/employee-edit.page').then(
+            (m) => m.EmployeeEditPage
+          ),
+        resolve: {
+          employee: employeeResolver,
+        },
+        canDeactivate: [
+          () =>
+            import('./core/guards/unsaved-changes.guard').then(
+              (m) => m.unsavedChangesGuard
+            ),
+        ],
+      },
+      {
         path: 'employees/:id',
         loadComponent: () =>
           import(
