@@ -78,3 +78,21 @@
   color: #b00020;
   margin-top: 12px;
 }
+
+.actions {
+  margin: 8px 0 12px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-decoration: none;
+
+  &:hover {
+    background: var(--color-bg);
+  }
+}

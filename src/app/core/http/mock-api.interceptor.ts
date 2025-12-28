@@ -181,6 +181,21 @@ export const mockApiInterceptor: HttpInterceptorFn = (req, next) => {
     ).pipe(delay(250));
   }
 
-  // Diğer tüm /api istekleri fallback
+  // DELETE /api/employees/:id
+  if (req.method === 'DELETE' && path.startsWith('/api/employees/')) {
+    const id = path.split('/').pop()!;
+    const idx = EMPLOYEES.findIndex((e) => e.id === id);
+
+    if (idx === -1) {
+      return of(
+        new HttpResponse({ status: 404, body: { message: 'Not Found' } })
+      ).pipe(delay(200));
+    }
+
+    EMPLOYEES.splice(idx, 1);
+
+    return of(new HttpResponse({ status: 204 })).pipe(delay(200));
+  }
+
   return next(req);
 };
