@@ -38,6 +38,10 @@ export class EmployeesApi {
     return this.http.put<Employee>(`/api/employees/${id}`, input);
   }
 
+  delete(id: string) {
+    return this.http.delete<void>(`/api/employees/${id}`);
+  }
+
   checkEmailAvailable(email: string) {
     return this.http.get<{ available: boolean }>('/api/employees/check-email', {
       params: { email },
