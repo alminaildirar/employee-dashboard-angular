@@ -10,4 +10,10 @@ import { EmployeesStore } from '../../core/services/employee.store';
 })
 export class EmployeesPage {
   readonly store = inject(EmployeesStore);
+
+  constructor() {
+    if (this.store.employees().length === 0) {
+      this.store.refresh();
+    }
+  }
 }
