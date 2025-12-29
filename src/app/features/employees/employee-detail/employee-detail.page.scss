@@ -81,6 +81,8 @@
 
 .actions {
   margin: 8px 0 12px;
+  display: flex;
+  gap: 10px;
 }
 
 .btn {
@@ -91,8 +93,13 @@
   background: var(--color-surface);
   color: var(--color-text);
   text-decoration: none;
+  cursor: pointer;
 
   &:hover {
     background: var(--color-bg);
   }
+}
+
+.btn.danger {
+  border-color: rgba(239, 68, 68, 0.35);
 }

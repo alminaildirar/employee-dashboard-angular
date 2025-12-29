@@ -5,6 +5,9 @@
 @if (employee(); as e) {
 <div class="actions">
   <a class="btn" [routerLink]="['/employees', e.id, 'edit']">Edit</a>
+  <button class="btn danger" type="button" (click)="deleteEmployee()">
+    Delete
+  </button>
 </div>
 <div class="card">
   <div class="row">
