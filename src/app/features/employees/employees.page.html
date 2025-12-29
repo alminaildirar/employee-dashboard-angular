@@ -15,6 +15,43 @@
   <button type="button" (click)="store.refresh()">Refresh</button>
 </div>
 
+<div class="toolbar">
+  <input
+    type="text"
+    placeholder="Search name or email…"
+    [value]="store.query()"
+    (input)="store.query.set(($any($event.target).value || '').toString())"
+  />
+
+  <select
+    [value]="store.roleFilter()"
+    (change)="store.roleFilter.set($any($event.target).value)"
+  >
+    <option value="all">All roles</option>
+    <option value="Engineer">Engineer</option>
+    <option value="Manager">Manager</option>
+    <option value="HR">HR</option>
+  </select>
+
+  <select
+    [value]="store.statusFilter()"
+    (change)="store.statusFilter.set($any($event.target).value)"
+  >
+    <option value="all">All statuses</option>
+    <option value="ACTIVE">ACTIVE</option>
+    <option value="INACTIVE">INACTIVE</option>
+  </select>
+
+  <select
+    [value]="store.sortBy()"
+    (change)="store.sortBy.set($any($event.target).value)"
+  >
+    <option value="name">Sort: Name</option>
+    <option value="role">Sort: Role</option>
+    <option value="status">Sort: Status</option>
+  </select>
+</div>
+
 <!-- =========================
        Table
        ========================= -->
@@ -26,7 +63,7 @@
     <div>Status</div>
   </div>
 
-  @for (e of store.employees(); track e.id) {
+  @for (e of store.filteredEmployees(); track e.id) {
   <div class="row">
     <div>
       <a class="name" [routerLink]="['/employees', e.id]"> {{ e.fullName }} </a>
