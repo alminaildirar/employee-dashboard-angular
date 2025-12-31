@@ -52,9 +52,9 @@
   </select>
 </div>
 
-<!-- =========================
-       Table
-       ========================= -->
+@if (!store.isLoading() && !store.error() && store.count() === 0) {
+<p class="empty">0 sonuç bulundu.</p>
+}
 <div class="table">
   <div class="row head">
     <div>Name</div>
