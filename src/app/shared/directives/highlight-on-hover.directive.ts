@@ -5,7 +5,7 @@ import { Directive, HostBinding, HostListener, Input } from '@angular/core';
   standalone: true,
 })
 export class HighlightOnHoverDirective {
-  @Input() appHighlightOnHover = 'rgba(37, 99, 235, 0.06)'; // primary'ye yakın
+  @Input() appHighlightOnHover = 'rgba(37, 99, 235, 0.06)'; 
 
   @HostBinding('style.backgroundColor') bg = '';
   @HostBinding('style.transition') transition =
