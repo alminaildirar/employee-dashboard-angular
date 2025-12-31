@@ -64,7 +64,7 @@
   </div>
 
   @for (e of store.filteredEmployees(); track e.id) {
-  <div class="row">
+  <div class="row" appHighlightOnHover>
     <div>
       <a class="name" [routerLink]="['/employees', e.id]"> {{ e.fullName }} </a>
     </div>
