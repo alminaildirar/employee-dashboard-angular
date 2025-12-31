@@ -66,7 +66,9 @@
 
   @for (e of store.filteredEmployees(); track e.id) {
   <div class="row" appHighlightOnHover>
-    <div>
+    <div class="nameCell">
+      <span class="avatar">{{ e.fullName | initials }}</span>
+
       <a class="name" [routerLink]="['/employees', e.id]"> {{ e.fullName }} </a>
     </div>
 
