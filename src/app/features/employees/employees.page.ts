@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { EmployeesStore } from '../../core/services/employee.store';
+import { AutofocusDirective } from '../../shared/directives/autofocus.directive';
+import { HighlightOnHoverDirective } from '../../shared/directives/highlight-on-hover.directive';
 
 @Component({
   standalone: true,
-  imports: [RouterLink],
+  imports: [RouterLink, HighlightOnHoverDirective, AutofocusDirective],
   templateUrl: './employees.page.html',
   styleUrl: './employees.page.scss',
 })
