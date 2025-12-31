@@ -1,0 +1,41 @@
+<h1>Activity</h1>
+
+<div class="toolbar">
+  <input
+    type="text"
+    placeholder="Search activity…"
+    [value]="query()"
+    (input)="query.set(($any($event.target).value || '').toString())"
+  />
+
+  <select
+    [value]="typeFilter()"
+    (change)="typeFilter.set($any($event.target).value)"
+  >
+    <option value="all">All</option>
+    <option value="INFO">Info</option>
+    <option value="SUCCESS">Success</option>
+    <option value="WARNING">Warning</option>
+    <option value="ERROR">Error</option>
+  </select>
+
+  <button type="button" class="ghost" (click)="clear()">Clear</button>
+
+  <div class="meta">Showing <b>{{ vm().shown }}</b> / {{ vm().total }}</div>
+</div>
+
+@if (!hasItems()) {
+<p class="empty">No activity matches your filters.</p>
+} @else {
+<div class="list">
+  @for (a of vm().items; track a.id) {
+  <div class="item" [class]="a.type">
+    <div class="top">
+      <span class="pill">{{ a.type }}</span>
+      <span class="time">{{ a.at | date: 'HH:mm:ss' }}</span>
+    </div>
+    <div class="msg">{{ a.message }}</div>
+  </div>
+  }
+</div>
+}
