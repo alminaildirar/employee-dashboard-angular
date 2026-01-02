@@ -1,59 +1,118 @@
-# NgPower
+# 🧩 Employee Dashboard
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.15.
+Projede, standalone components, signals, RxJS ve Angular rputes(guards + resolvers) birlikte kullanarak async veri akısı yönetilmiştir. Employee management ve activity feed sayfalarında hem Template-driven forms hem de reactive forms kullanılarak farklı form yaklaşımları, custom directives/pipes ve state yönetimi uygulanmıştır.
 
-## Development server
+---
 
-To start a local development server, run:
+## 🧱 Kullanılan Teknolojiler
 
-```bash
-ng serve
+- **Angular 19**
+- **Standalone Components**
+- **Angular Signals**
+- **RxJS**
+- **Angular Router (Guards & Resolvers)**
+- **Reactive Forms & Template-driven Forms**
+- **Custom Directives & Pipes**
+- **Mock API (HttpInterceptor)**
+- **SCSS + CSS Variables**
+- **Vite Dev Server**
+
+---
+
+## 📂 Proje Yapısı (Özet)
+
+```txt
+src/
+├─ app/
+│  ├─ core/
+│  │  ├─ guards/
+│  │  ├─ http/
+│  │  └─ services/
+│  ├─ features/
+│  │  ├─ employees/
+│  │  ├─ activity/
+│  │  ├─ dashboard/
+│  │  └─ settings/
+│  ├─ shared/
+│  │  ├─ directives/
+│  │  ├─ pipes/
+│  │  └─ ui/
+│  └─ app.routes.ts
+└─ styles.scss
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## ✨ Özellikler
 
-## Code scaffolding
+### 🔐 Authentication & Routing
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+- `CanActivateChild` ile protected sayfalar
+- `CanMatch` ile guest-only route (login)
+- Route Resolver kullanımı
+- Guard’lar ile yetkilendirme ve navigasyon kontrolü
 
-```bash
-ng generate component component-name
-```
+---
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+### 👥 Employees Management
 
-```bash
-ng generate --help
-```
+- Employee listeleme
+- Detay görüntüleme
+- **Create / Edit / Delete** işlemleri
+- Route parametreleri ile dinamik sayfalar
+- Resolver ile detay datasını sayfa açılmadan önce alma
 
-## Building
+---
 
-To build the project run:
+### 📝 Forms (Template-driven & Reactive)
 
-```bash
-ng build
-```
+- **Template-driven Forms**
+  - Input ve two-way binding
+- **Reactive Forms**
+  - Typed `FormGroup` ve `FormControl` kullanımı
+  - Sync validation (required, minLength vb.)
+  - Async validation (email availability kontrolü)
+  - Form state yönetimi (`dirty`, `touched`, `valid`)
+- Edit sayfasında **unsaved changes** kontrolü (CanDeactivate Guard)
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+---
 
-## Running unit tests
+### 📡 Async Veri Akışı (Signals & RxJS)
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+- Signal tabanlı state yönetimi
+- Derived state (`computed`) kullanımı
+- Search / filter / sort işlemleri **signals** ile
+- Debounced search input
+- Observable ↔ Signal dönüşümü (`toSignal`, `toObservable`)
+- RxJS operator’ları (`map`, `combineLatest`, `scan`, `shareReplay`)
 
-```bash
-ng test
-```
+---
 
-## Running end-to-end tests
+### 📰 Activity Feed (RxJS Demo Feature)
 
-For end-to-end (e2e) testing, run:
+- RxJS ile canlı veri akışı (timer)
+- Event stream mantığı
+- UI filtreleri (signal) + data stream (observable)
+- Observable → ViewModel → Signal yaklaşımı
 
-```bash
-ng e2e
-```
+---
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+### 🧩 Custom Directives
 
-## Additional Resources
+- `appHighlightOnHover` → hover davranışı
+- `appAutofocus` → input focus yönetimi
+- UI davranışlarını component logic’inden ayırma
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+---
+
+### 🧪 Custom Pipes
+
+- `initials` → isimden avatar harfi üretme
+- `statusLabel` → status gösterimi
+- Pure pipe kullanımı (presentation logic)
+
+---
+
+### 🧪 Mock API
+
+- HttpInterceptor ile mock backend
+- GET / POST / PUT / DELETE endpoint’leri
+- Async validation için fake API senaryoları
