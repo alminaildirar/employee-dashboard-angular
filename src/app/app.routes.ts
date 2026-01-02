@@ -28,6 +28,13 @@ export const routes: Routes = [
           ),
       },
       {
+        path: 'activity',
+        loadComponent: () =>
+          import('./features/activity/activity.page').then(
+            (m) => m.ActivityPage
+          ),
+      },
+      {
         path: 'employees',
         loadComponent: () =>
           import('./features/employees/employees.page').then(
